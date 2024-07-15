@@ -1,0 +1,16 @@
+### List all production items
+GET http://127.0.0.1:8000/productions/
+Accept: application/json
+Content-Type: application/json
+
+### Create new production item
+POST http://127.0.0.1:8000/productions/
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Test Production",
+    "quantity": 100,
+    "year": 2024,
+    "category_id": 1
+}
