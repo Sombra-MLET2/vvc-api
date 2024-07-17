@@ -8,3 +8,4 @@ class Category(Base):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     name = Column(String, unique=True, nullable=False)
+    meta_name = Column(String, unique=True, nullable=True)

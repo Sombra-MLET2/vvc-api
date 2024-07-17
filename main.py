@@ -2,23 +2,21 @@ import logging
 from typing import Annotated
 
 from fastapi import FastAPI, Depends
-from sqlalchemy.orm import Session
 
+from infra.database.database import Base, engine
 from infra.security.security import get_current_active_user
-from repositories import production_repository
-from repositories.production_repository import ProductionDTO
-from routes.users_router import router
-from infra.database.database import Base, engine, get_db
+from routes.productions_router import router as productions_router
+from routes.users_router import router as users_router
 from ucs.user.dtos import User
 
 # SQLAlchemy create tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-app.include_router(router)
+app.include_router(users_router)
+app.include_router(productions_router)
 
 # Enabling caching module
-import infra.cache.caching
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -34,15 +32,7 @@ async def root():
         }
     }
 
+
 @app.get("/protected")
 async def protected(current_user: Annotated[User, Depends(get_current_active_user)]):
-    return { "protected": True }
-
-# Workaround for testing DB Via HTTP Request
-@app.get("/productions/")
-async def list_productions(db: Session = Depends(get_db)):
-    return production_repository.find_all(db)
-
-@app.post("/productions/")
-async def add_production(dto: ProductionDTO, db: Session = Depends(get_db)):
-    return production_repository.create_new(db, dto)
+    return {"protected": True}
