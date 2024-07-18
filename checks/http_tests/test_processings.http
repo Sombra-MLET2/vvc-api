@@ -40,7 +40,7 @@ Content-Type: application/json
 Authorization: Bearer x
 
 {
-  "cultivation": "Seyve Willard (Tinta)",
+  "cultivation": "Chatêau Willard",
   "quantity": 1002782,
   "year": 2023,
   "category_id": 2,

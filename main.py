@@ -5,6 +5,7 @@ from fastapi import FastAPI, Depends
 
 from infra.database.database import Base, engine
 from infra.security.security import get_current_active_user
+from routes.categories_router import router as categories_router
 from routes.processings_router import router as processing_router
 from routes.productions_router import router as productions_router
 from routes.users_router import router as users_router
@@ -17,6 +18,7 @@ app = FastAPI()
 app.include_router(users_router)
 app.include_router(productions_router)
 app.include_router(processing_router)
+app.include_router(categories_router)
 
 # Enabling caching module
 

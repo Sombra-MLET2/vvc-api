@@ -1,9 +1,15 @@
 from pydantic import BaseModel
 
 
+# Categories
 class CategoryDTO(BaseModel):
     name: str
     meta_name: str
+
+
+class CategoryWithIdDTO(CategoryDTO):
+    id: int
+
 
 # Product
 class ProductionDTO(BaseModel):
@@ -12,6 +18,7 @@ class ProductionDTO(BaseModel):
     quantity: int | None
     year: int
     category_id: int
+
 
 class ProductionDTOResponse(BaseModel):
     id: int | None = None
@@ -29,6 +36,7 @@ class ProcessingDTO(BaseModel):
     year: int
     category_id: int
     grape_class_id: int
+
 
 class ProcessingDTOResponse(BaseModel):
     id: int | None = None

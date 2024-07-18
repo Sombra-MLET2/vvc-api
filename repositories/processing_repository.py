@@ -25,7 +25,7 @@ def create_new(db: Session, dto: ProcessingDTO) -> Processing:
 
 
 def find_all(db: Session) -> List[Processing]:
-    return find_by(db, None, None)
+    return find_by(db, None, None, None)
 
 
 def find_one(db: Session, pro_id: int) -> Processing:

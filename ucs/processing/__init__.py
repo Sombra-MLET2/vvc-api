@@ -2,9 +2,10 @@ from typing import List
 
 from sqlalchemy.orm import Session
 
-from dtos import CategoryDTO, ProcessingDTOResponse
+from dtos import ProcessingDTOResponse, ProcessingDTO
 from models.processing import Processing
 from repositories import processing_repository
+from ucs.categories import to_dto as to_category_dto
 
 
 def find_processing_items(db: Session, category: str | None, year: int | None, grape: str | None):
@@ -17,12 +18,17 @@ def find_processing_items(db: Session, category: str | None, year: int | None, g
 def find_processing_item(db: Session, proc_id: int):
     return __to_dto(processing_repository.find_one(db, proc_id))
 
+
+def add_new_processing_item(db: Session, dto: ProcessingDTO) -> ProcessingDTOResponse:
+    return __to_dto(processing_repository.create_new(db, dto))
+
+
 def __to_dto(proc: Processing) -> ProcessingDTOResponse:
     if proc is None:
         return ProcessingDTOResponse()
 
-    category = CategoryDTO(name=proc.category.name, meta_name=proc.category.meta_name)
-    grape_class = CategoryDTO(name=proc.grape_class.name, meta_name=proc.grape_class.meta_name)
+    category = to_category_dto(proc.category)
+    grape_class = to_category_dto(proc.grape_class)
     dto = ProcessingDTOResponse(
         id=proc.id,
         cultivation=proc.cultivation,
@@ -33,6 +39,7 @@ def __to_dto(proc: Processing) -> ProcessingDTOResponse:
     )
 
     return dto
+
 
 def __to_dto_list(proc: List[Processing]) -> List[ProcessingDTOResponse]:
     return [__to_dto(proc) for proc in proc]

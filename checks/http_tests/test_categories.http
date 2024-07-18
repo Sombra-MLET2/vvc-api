@@ -1,0 +1,16 @@
+### List all categories
+GET http://127.0.0.1:8000/categories/
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer x
+
+### Create new category
+POST http://127.0.0.1:8000/categories
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer x
+
+{
+    "name": "Vinho Tinto",
+    "meta_name": "tinto"
+}
