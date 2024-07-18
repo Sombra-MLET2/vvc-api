@@ -37,17 +37,17 @@ async def list_productions(db: Session = Depends(get_db), prod_id: int | None = 
 
 
 @router.get("/year/{year}")
-async def list_productions(db: Session = Depends(get_db), year: int = None):
+async def list_productions_by_year(db: Session = Depends(get_db), year: int = None):
     return find_production_items(db, None, year)
 
 
 @router.get("/category/{category}")
-async def list_productions(db: Session = Depends(get_db), category: str = None):
+async def list_productions_by_category(db: Session = Depends(get_db), category: str = None):
     return find_production_items(db, category, None)
 
 
 @router.get("/category/{category}/year/{year}")
-async def list_productions(db: Session = Depends(get_db), category: str = None, year: int = None):
+async def list_productions_by_category_year(db: Session = Depends(get_db), category: str = None, year: int = None):
     return find_production_items(db, category, year)
 
 
