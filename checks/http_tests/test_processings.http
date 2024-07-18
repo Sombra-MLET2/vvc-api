@@ -1,0 +1,48 @@
+### List all processing items
+GET http://127.0.0.1:8000/processing/
+Accept: application/json
+Content-Type: application/json
+
+### List all processing by product_id
+GET http://127.0.0.1:8000/processing/?prod_id=1
+Accept: application/json
+Content-Type: application/json
+
+### List all processing by year
+GET http://127.0.0.1:8000/processing/year/2024
+Accept: application/json
+Content-Type: application/json
+
+### List all processing by category
+GET http://127.0.0.1:8000/processing/category/cat_branc
+Accept: application/json
+Content-Type: application/json
+
+### List all processing by year and category
+GET http://127.0.0.1:8000/processing/category/cat_tint/year/2024
+Accept: application/json
+Content-Type: application/json
+
+### List all processing by grape
+GET http://127.0.0.1:8000/processing/grape/americana
+Accept: application/json
+Content-Type: application/json
+
+### List all processing by grape and year
+GET http://127.0.0.1:8000/processing/grape/mesa/year/2022
+Accept: application/json
+Content-Type: application/json
+
+### Create new processing item
+POST http://127.0.0.1:8000/processing/
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer x
+
+{
+  "cultivation": "Seyve Willard (Tinta)",
+  "quantity": 1002782,
+  "year": 2023,
+  "category_id": 2,
+  "grape_class_id": 4
+}
