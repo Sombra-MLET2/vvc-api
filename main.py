@@ -9,6 +9,7 @@ from routes.productions_router import router as productions_router
 from routes.users_router import router as users_router
 from routes.scrping_router import router as scraping_router
 from ucs.user.dtos import User
+from appscheduler.scheduler import start_scheduler, stop_scheduler
 
 # SQLAlchemy create tables
 Base.metadata.create_all(bind=engine)
@@ -40,3 +41,21 @@ async def root():
 @app.get("/protected")
 async def protected(current_user: Annotated[User, Depends(get_current_active_user)]):
     return {"protected": True}
+
+
+@app.get("/stop_scheduler")
+async def stop_tasks_scheduler():
+    stop_scheduler()
+    return {"message": "scheduler is stop"}
+
+
+@app.on_event("startup")
+async def startup_event():
+    start_scheduler()
+    print("Start")
+
+
+@app.on_event("shutdown")
+def shutdown_event():
+    stop_scheduler()
+    print("Stop")
