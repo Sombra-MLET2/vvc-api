@@ -1,6 +1,11 @@
-### List all processing items
+### List all processing items - JSON
 GET http://127.0.0.1:8000/processing/
 Accept: application/json
+Content-Type: application/json
+
+### List all processing items - CSV
+GET http://127.0.0.1:8000/processing/
+Accept: text/csv
 Content-Type: application/json
 
 ### List all processing by product_id

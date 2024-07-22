@@ -1,8 +1,15 @@
-### List all categories
+### List all categories - JSON
 GET http://127.0.0.1:8000/categories/
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer x
+
+### List all categories - CSV
+GET http://127.0.0.1:8000/categories/
+Accept: text/csv
+Content-Type: application/json
+Authorization: Bearer x
+
 
 ### Create new category
 POST http://127.0.0.1:8000/categories

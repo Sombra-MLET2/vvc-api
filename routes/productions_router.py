@@ -1,11 +1,13 @@
 import logging
 from typing import Annotated, List
 
-from fastapi import APIRouter, Depends
+from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
+from starlette.requests import Request
 from starlette.responses import Response
 
 from dtos import ProductionDTO, ProductionDTOResponse
+from infra.converter.fast_api_csv_converter import handle_csv_response
 from infra.database.database import get_db
 from infra.security.security import get_current_active_user
 from models.user import User
@@ -23,10 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 @router.get("/", summary="Production resource list",
-            description="Get all production items or a single by using query string `prod_id`",
-            response_model=List[ProductionDTOResponse] | ProductionDTOResponse)
-async def list_productions(db: Session = Depends(get_db), prod_id: int | None = None):
-    print(prod_id)
+            description="Get all production items or a single by using query string `prod_id`. Supports `application/json` and `text/csv` as response type.",
+            response_model=List[ProductionDTOResponse] | ProductionDTOResponse,)
+async def list_productions(request: Request, db: Session = Depends(get_db), prod_id: int | None = None):
     if prod_id:
         prod = find_production_item(db, prod_id)
 
@@ -35,10 +36,12 @@ async def list_productions(db: Session = Depends(get_db), prod_id: int | None = 
 
         return prod
 
-    return find_production_items(db, None, None)
+    return handle_csv_response(find_production_items(db, None, None), request, "production_all")
 
 
-@router.get("/year/{year}", summary="Get production items by `year`", description="Get production items by `year`",
+@router.get("/year/{year}",
+            summary="Get production items by `year`",
+            description="Get production items by `year`",
             response_model=List[ProductionDTOResponse])
 async def list_productions_by_year(db: Session = Depends(get_db), year: int = None):
     return find_production_items(db, None, year)

@@ -3,9 +3,11 @@ from typing import Annotated, List
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from starlette.requests import Request
 from starlette.responses import Response
 
 from dtos import ProcessingDTO, ProcessingDTOResponse
+from infra.converter.fast_api_csv_converter import handle_csv_response
 from infra.database.database import get_db
 from infra.security.security import get_current_active_user
 from models.user import User
@@ -24,7 +26,7 @@ logger = logging.getLogger(__name__)
 @router.get("/", summary="Processing resource list",
             description="Get all processing items or a single by using query string `proc_id`",
             response_model=List[ProcessingDTOResponse] | ProcessingDTOResponse)
-async def list_processing(db: Session = Depends(get_db), proc_id: int | None = None):
+async def list_processing(request: Request, db: Session = Depends(get_db), proc_id: int | None = None):
     if proc_id:
         proc = find_processing_item(db, proc_id)
 
@@ -33,7 +35,7 @@ async def list_processing(db: Session = Depends(get_db), proc_id: int | None = N
 
         return proc
 
-    return find_processing_items(db, None, None, None)
+    return handle_csv_response(find_processing_items(db, None, None, None), request, "processing_all")
 
 
 @router.get("/year/{year}", summary="Processing resource list by year", description="Get processing items by `year`",

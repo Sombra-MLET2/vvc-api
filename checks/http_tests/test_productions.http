@@ -1,6 +1,11 @@
-### List all production items
+### List all production items - JSON
 GET http://127.0.0.1:8000/productions/
 Accept: application/json
+Content-Type: application/json
+
+### List all production items - CSV
+GET http://127.0.0.1:8000/productions/
+Accept: text/csv
 Content-Type: application/json
 
 ### List all production by product_id
