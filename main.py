@@ -52,10 +52,9 @@ async def stop_tasks_scheduler():
 @app.on_event("startup")
 async def startup_event():
     start_scheduler()
-    print("Start")
-
+    
 
 @app.on_event("shutdown")
 def shutdown_event():
     stop_scheduler()
-    print("Stop")
+    
