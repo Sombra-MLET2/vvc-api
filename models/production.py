@@ -9,7 +9,7 @@ class Production(Base):
     __tablename__ = 'productions'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    name = Column(String, unique=True, nullable=False)
+    name = Column(String, unique=False, nullable=False)
     quantity = Column(Integer)
     year = Column(Integer, nullable=False)
     category: Mapped["Category"] = relationship()

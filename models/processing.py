@@ -9,7 +9,7 @@ class Processing(Base):
     __tablename__ = 'processings'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    cultivation = Column(String, unique=True, nullable=False)
+    cultivation = Column(String, unique=False, nullable=False)
     year = Column(Integer, nullable=False)
     quantity = Column(Integer)
 

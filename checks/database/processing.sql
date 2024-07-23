@@ -1,7 +1,3 @@
-insert into categories(name, meta_name) values('Vinho Tinto', 'tinto'); -- 1
-insert into categories(name, meta_name) values('Vinho Branco', 'branco'); -- 2
-insert into categories(name, meta_name) values('Uvas de Mesa', 'mesa'); -- 3
-
 insert into processings(cultivation, year, quantity, grape_class_id, category_id) values('Gewurztraminert', 2024, 575, 1, 3);
 insert into processings(cultivation, year, quantity, grape_class_id, category_id) values('Alicante Bouschet', 2024, 1029, 2, 3);
 

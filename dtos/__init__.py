@@ -45,3 +45,19 @@ class ProcessingDTOResponse(BaseModel):
     year: int
     category: CategoryDTO
     grape_class: CategoryDTO
+
+# Sale
+class SaleDTO(BaseModel):
+    id: int | None = None
+    name: str
+    quantity: int | None
+    year: int
+    category_id: int
+
+
+class SaleDTOResponse(BaseModel):
+    id: int | None = None
+    name: str
+    quantity: int | None
+    year: int
+    category: CategoryDTO

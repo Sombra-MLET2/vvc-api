@@ -1,0 +1,42 @@
+### List all production items - JSON
+GET http://127.0.0.1:8000/sales/
+Accept: application/json
+Content-Type: application/json
+
+### List all production items - CSV
+GET http://127.0.0.1:8000/sales/
+Accept: text/csv
+Content-Type: application/json
+
+### List all production by product_id
+GET http://127.0.0.1:8000/sales/?sale_id=1
+Accept: application/json
+Content-Type: application/json
+
+### List all production by year
+GET http://127.0.0.1:8000/sales/year/2022
+Accept: application/json
+Content-Type: application/json
+
+### List all production by category
+GET http://127.0.0.1:8000/sales/category/sucouv1
+Accept: application/json
+Content-Type: application/json
+
+### List all production by year and category
+GET http://127.0.0.1:8000/sales/category/sucouv1/year/2023
+Accept: application/json
+Content-Type: application/json
+
+### Create new production item
+POST http://127.0.0.1:8000/sales/
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbGljZUBtYWlsLmNvbSIsImV4cCI6MTcyMTc2NzExOH0.21QQ-eY_WssmacSwhOzi4rRQoHQU_nS5gZIGz-kxZkg
+
+{
+    "name": "Alcool vinico",
+    "quantity": 0,
+    "year": 2023,
+    "category_id": 16
+}
