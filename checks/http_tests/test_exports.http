@@ -1,0 +1,53 @@
+### List all processing items - JSON
+GET http://127.0.0.1:8000/exports/
+Accept: application/json
+Content-Type: application/json
+
+### List all processing items - CSV
+GET http://127.0.0.1:8000/exports/
+Accept: text/csv
+Content-Type: application/json
+
+### List all processing by product_id
+GET http://127.0.0.1:8000/exports/?exp_id=1
+Accept: application/json
+Content-Type: application/json
+
+### List all processing by year
+GET http://127.0.0.1:8000/exports/year/2022
+Accept: application/json
+Content-Type: application/json
+
+### List all processing by category
+GET http://127.0.0.1:8000/exports/category/vinho1
+Accept: application/json
+Content-Type: application/json
+
+### List all processing by year and category
+GET http://127.0.0.1:8000/exports/category/vinho1/year/2023
+Accept: application/json
+Content-Type: application/json
+
+### List all processing by grape
+GET http://127.0.0.1:8000/exports/country/chile
+Accept: application/json
+Content-Type: application/json
+
+### List all processing by grape and year
+GET http://127.0.0.1:8000/exports/country/alemanha/year/2022
+Accept: application/json
+Content-Type: application/json
+
+### Create new processing item
+POST http://127.0.0.1:8000/exports/
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbGljZUBtYWlsLmNvbSIsImV4cCI6MTcyMTc4MDAzNn0._O4b1LbYfhV4MS9-INsFVCNCiuZ4qCJiOFGs1hcEg34
+
+{
+  "quantity": 2551,
+  "year": 2022,
+  "value": 12014,
+  "category_id": 15,
+  "country_id": 6
+}

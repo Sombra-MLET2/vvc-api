@@ -7,6 +7,7 @@ from routes.categories_router import router as categories_router
 from routes.processings_router import router as processing_router
 from routes.productions_router import router as productions_router
 from routes.sales_router import router as sales_router
+from routes.exports import router as exports_router
 from routes.users_router import router as users_router
 from routes.scrping_router import router as scraping_router
 from ucs.user.dtos import User
@@ -22,6 +23,7 @@ app.include_router(processing_router)
 app.include_router(categories_router)
 app.include_router(scraping_router)
 app.include_router(sales_router)
+app.include_router(exports_router)
 
 # Enabling caching module
 
