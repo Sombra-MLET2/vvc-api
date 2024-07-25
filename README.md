@@ -27,32 +27,50 @@ vvc-api$ source env/bin/activate
 ```
 5. Optionally, run tests from `test_main.http`
 
-### Project Structure
+## Project Structure
+
+### VVC-API Components
+![VVC Api Main Components](imgs/vvc-comps.png)
+
+
+### VVC-API Schema
+![VVC DB Schema](imgs/vvc-schema.png)
+
+
+### Structure
 
 ```
+├── appscheduler
 ├── Dockerfile
+├── dtos
 ├── infra
-│   └── ...
+    ├── cache
+    ├── converter
+    ├── database
+    └── security
 ├── main.py
 ├── models
-│   └── ...
+├── repositories
+    ├── category_repository.py
+    ├── exports_repository.py
+    └── ... 
 ├── requirements.txt
 ├── routes
-│   └── ...
+├── scraping
 └── ucs
-    ├── use case 1
-    │   └── ...
-    ├── use case 2
-    │   └── ...
-    └── use case 3
-        └── ...
+    ├── categories
+    ├── imports
+    └── token
+    └── ...
 ```
 
+* **appscheduler** - Scheduler logic & job setup to map and scrape Embrapa csv datasets
 * **Dockerfile** - Minimal configuration to build an image
 * **infra** - Database, repositories and other infra-related scripts
 * **models** - Core models of this API
 * **requirements.txt** - Project dependencies - install them before running the project
 * **routes** - FastAPI routes definition scripts
+* **scraping** - Selenium/FF based scraping component 
 * **ucs** - API use cases 
 
 ### API Docs
