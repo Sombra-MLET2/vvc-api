@@ -82,3 +82,20 @@ class ExportDTOResponse(BaseModel):
     quantity: int | None
     year: int
     category: CategoryDTO
+
+# Imports
+class ImportDTO(BaseModel):
+    id: int | None = None
+    quantity: int | None
+    value: float | None
+    year: int
+    category_id: int
+    country_id: int
+
+
+class ImportDTOResponse(BaseModel):
+    id: int | None = None
+    country: str
+    quantity: int | None
+    year: int
+    category: CategoryDTO

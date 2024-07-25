@@ -1,17 +1,17 @@
 import logging
-from typing import Annotated
-from fastapi import FastAPI, Depends
+
+from fastapi import FastAPI
+
+from appscheduler.scheduler import start_scheduler, stop_scheduler
 from infra.database.database import Base, engine
-from infra.security.security import get_current_active_user
 from routes.categories_router import router as categories_router
+from routes.exports_router import router as exports_router
+from routes.imports_router import router as imports_router
 from routes.processings_router import router as processing_router
 from routes.productions_router import router as productions_router
 from routes.sales_router import router as sales_router
-from routes.exports import router as exports_router
-from routes.users_router import router as users_router
 from routes.scrping_router import router as scraping_router
-from ucs.user.dtos import User
-from appscheduler.scheduler import start_scheduler, stop_scheduler
+from routes.users_router import router as users_router
 
 # SQLAlchemy create tables
 Base.metadata.create_all(bind=engine)
@@ -24,6 +24,7 @@ app.include_router(categories_router)
 app.include_router(scraping_router)
 app.include_router(sales_router)
 app.include_router(exports_router)
+app.include_router(imports_router)
 
 # Enabling caching module
 
@@ -40,11 +41,6 @@ async def root():
             "team": "Sombra-MLET2"
         }
     }
-
-
-@app.get("/protected")
-async def protected(current_user: Annotated[User, Depends(get_current_active_user)]):
-    return {"protected": True}
 
 
 @app.get("/stop_scheduler")
