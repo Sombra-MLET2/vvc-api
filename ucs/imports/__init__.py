@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy.orm import Session
 
 from dtos import CategoryDTO, ImportDTOResponse, ImportDTO
-from models.importation import Importation
+from models.imports import Import
 from repositories import imports_repository
 
 
@@ -21,7 +21,7 @@ def find_imports_item(db: Session, imp_id: int):
 def add_import_item(db: Session, dto: ImportDTO) -> ImportDTOResponse:
     return __to_dto(imports_repository.create_new(db, dto))
 
-def __to_dto(imp: Importation) -> ImportDTOResponse:
+def __to_dto(imp: Import) -> ImportDTOResponse:
     if imp is None:
         return ImportDTOResponse()
 
@@ -37,5 +37,5 @@ def __to_dto(imp: Importation) -> ImportDTOResponse:
 
     return dto
 
-def __to_dto_list(imports: List[Importation]) -> List[ImportDTOResponse]:
+def __to_dto_list(imports: List[Import]) -> List[ImportDTOResponse]:
     return [__to_dto(imp) for imp in imports]

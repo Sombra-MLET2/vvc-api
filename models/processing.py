@@ -6,7 +6,7 @@ from models.category import Category
 
 
 class Processing(Base):
-    __tablename__ = 'processings'
+    __tablename__ = 'processing'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     cultivation = Column(String, unique=False, nullable=False)

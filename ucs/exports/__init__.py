@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy.orm import Session
 
 from dtos import CategoryDTO, ExportDTOResponse, ExportDTO
-from models.exportation import Exportation
+from models.exports import Export
 from repositories import exports_repository
 
 
@@ -21,7 +21,7 @@ def find_exports_item(db: Session, exp_id: int):
 def add_export_item(db: Session, dto: ExportDTO) -> ExportDTOResponse:
     return __to_dto(exports_repository.create_new(db, dto))
 
-def __to_dto(exp: Exportation) -> ExportDTOResponse:
+def __to_dto(exp: Export) -> ExportDTOResponse:
     if exp is None:
         return ExportDTOResponse()
 
@@ -37,5 +37,5 @@ def __to_dto(exp: Exportation) -> ExportDTOResponse:
 
     return dto
 
-def __to_dto_list(exports: List[Exportation]) -> List[ExportDTOResponse]:
+def __to_dto_list(exports: List[Export]) -> List[ExportDTOResponse]:
     return [__to_dto(exp) for exp in exports]

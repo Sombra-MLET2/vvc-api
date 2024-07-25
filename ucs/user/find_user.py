@@ -3,7 +3,7 @@ import logging
 from sqlalchemy.orm import Session
 
 from models.user import User as Entity
-from models import country, category, production, sale, importation, exportation
+from models import country, category, production, sale, imports, exports
 
 
 logger = logging.getLogger(__name__)

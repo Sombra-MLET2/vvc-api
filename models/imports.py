@@ -6,8 +6,8 @@ from models.category import Category
 from models.country import Country
 
 
-class Importation(Base):
-    __tablename__ = 'importations'
+class Import(Base):
+    __tablename__ = 'imports'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     quantity = Column(Integer)

@@ -7,13 +7,13 @@ from sqlalchemy.orm import Session
 
 from dtos import ExportDTO
 from models.country import Country
-from models.exportation import Exportation
+from models.exports import Export
 
 
-def create_new(db: Session, dto: ExportDTO) -> Exportation:
+def create_new(db: Session, dto: ExportDTO) -> Export:
     dto.id = None
 
-    db_obj = Exportation(**dto.model_dump())
+    db_obj = Export(**dto.model_dump())
 
     try:
         db.add(db_obj)
@@ -26,28 +26,28 @@ def create_new(db: Session, dto: ExportDTO) -> Exportation:
     return db_obj
 
 
-def find_all(db: Session) -> List[Exportation]:
+def find_all(db: Session) -> List[Export]:
     return find_by(db, None, None, None)
 
 
-def find_one(db: Session, exp_id: int) -> Exportation:
-    return db.query(Exportation).filter(Exportation.id == exp_id).first()
+def find_one(db: Session, exp_id: int) -> Export:
+    return db.query(Export).filter(Export.id == exp_id).first()
 
 
-def find_by(db: Session, category: str | None, year: int | None, country: str | None) -> List[Exportation]:
-    query = (db.query(Exportation)
-             .join(Country, Exportation.country_id == Country.id)
-             .order_by(Exportation.year.desc())
+def find_by(db: Session, category: str | None, year: int | None, country: str | None) -> List[Export]:
+    query = (db.query(Export)
+             .join(Country, Export.country_id == Country.id)
+             .order_by(Export.year.desc())
              .order_by(Country.name))
 
     if category and year:
-        query = query.filter(Exportation.category.has(meta_name=category), Exportation.year == year)
+        query = query.filter(Export.category.has(meta_name=category), Export.year == year)
     elif category:
-        query = query.filter(Exportation.category.has(meta_name=category))
+        query = query.filter(Export.category.has(meta_name=category))
     elif year:
-        query = query.filter(Exportation.year == year)
+        query = query.filter(Export.year == year)
 
     if country:
-        query = query.filter(Exportation.country.has(func.lower(country) == func.lower(Country.name)))
+        query = query.filter(Export.country.has(func.lower(country) == func.lower(Country.name)))
 
     return query.all()

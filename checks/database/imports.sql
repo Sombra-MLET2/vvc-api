@@ -1,4 +1,4 @@
-insert into importations(country_id, category_id, value, quantity, year)
+insert into imports(country_id, category_id, value, quantity, year)
     values
         (3, 1, 0, 0, 2023),
         (2, 1, 31853, 4806, 2023),
