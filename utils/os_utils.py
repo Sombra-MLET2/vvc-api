@@ -1,13 +1,26 @@
 from datetime import datetime
-import os
+from pathlib import Path
+import re
+import unicodedata
+
+from comn import constants
 
 
-def create_directory(path: str):
-    if not os.path.isdir(path):
-        os.mkdir(path)
+def remove_accentuation(string: str):
+    return ''.join(character for character in unicodedata.normalize('NFD', string) if not unicodedata.combining(character))
 
 
-def generate_filename(name: str, extension: str):
-    path = os.environ.get("HOME") + "/vvc-api/files"
+def filter_only_letters_and_numbers(string: str):
+    return re.sub(r"[^A-Za-z0-9]", "", string)
+
+
+def create_directory(path: Path):
+    if not path.parent.exists():
+        path.parent.mkdir(parents=True)
+
+
+def generate_filename(name: str) -> str:
+    name = remove_accentuation(name)
+    name = filter_only_letters_and_numbers(name).lower()
     date = datetime.today().strftime("%Y-%m-%d-%H-%M-%S")
-    return path + date + "-" + name + extension
+    return constants.FULL_CSV_FILE_DOWNLOAD_PATH(name=name, timestamp=date)

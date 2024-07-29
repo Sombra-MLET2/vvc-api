@@ -62,8 +62,8 @@ def get_csv_link(url):
 
 def download_csv(url, filename):
     try:
-        filename = generate_filename(filename, ".csv")
-        create_directory(filename[0:filename.rfind('/')])
+        filename = generate_filename(filename)
+        create_directory(filename)
         urlretrieve(url, filename)
         return {"status": "OK", "message": "download successfully"}
     except:

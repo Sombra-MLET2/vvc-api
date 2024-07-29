@@ -1,6 +1,11 @@
 import logging
 import schedule
 
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
 def wrap_pre_execute(func):
     """
     Envolve uma funcao para ser executada dentro do contexto de __pre_execute.
@@ -34,8 +39,9 @@ def __pre_execute(function, *args, **kwargs):
         schedule.CancelJob: Se ocorrer uma excecao, retorna CancelJob para cancelar a tarefa agendada.
     """
     try:
-        logging.info(f'Em execução function [{function.__name__}()] com args: {args} e kwargs: {kwargs}')
+        logging.info(f'pre_execute - Starting  task [{function.__name__}()] with args: {args} e kwargs: {kwargs}')
         function(*args, **kwargs)
+        logging.info(f'pre_execute- Task executed successfully.')
     except Exception as e:
-        logging.exception("Erro ao executar uma tarefa agendada.")
+        logging.exception("pre_execute - Error executing a scheduled task.")
         return schedule.CancelJob
