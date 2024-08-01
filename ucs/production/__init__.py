@@ -17,9 +17,9 @@ def find_production_items(db: Session, category: str | None, year: int | None):
 def find_production_item(db: Session, prod_id: int):
     return __to_dto(production_repository.find_one(db, prod_id))
 
-def __to_dto(prod: Production) -> ProductionDTOResponse:
+def __to_dto(prod: Production) -> ProductionDTOResponse | None:
     if prod is None:
-        return ProductionDTOResponse()
+        return None
 
     category = CategoryDTO(name=prod.category.name, meta_name=prod.category.meta_name)
     dto = ProductionDTOResponse(

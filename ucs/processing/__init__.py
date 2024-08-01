@@ -23,9 +23,9 @@ def add_new_processing_item(db: Session, dto: ProcessingDTO) -> ProcessingDTORes
     return __to_dto(processing_repository.create_new(db, dto))
 
 
-def __to_dto(proc: Processing) -> ProcessingDTOResponse:
+def __to_dto(proc: Processing) -> ProcessingDTOResponse | None:
     if proc is None:
-        return ProcessingDTOResponse()
+        return None
 
     category = to_category_dto(proc.category)
     grape_class = to_category_dto(proc.grape_class)

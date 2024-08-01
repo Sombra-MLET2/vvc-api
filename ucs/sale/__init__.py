@@ -17,9 +17,9 @@ def find_sales_items(db: Session, category: str | None, year: int | None):
 def find_sales_item(db: Session, sale_id: int):
     return __to_dto(sale_repository.find_one(db, sale_id))
 
-def __to_dto(sale: Sale) -> SaleDTOResponse:
+def __to_dto(sale: Sale) -> SaleDTOResponse | None:
     if sale is None:
-        return SaleDTOResponse()
+        return None
 
     category = CategoryDTO(name=sale.category.name, meta_name=sale.category.meta_name)
     dto = SaleDTOResponse(
