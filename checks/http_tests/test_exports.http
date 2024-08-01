@@ -13,6 +13,11 @@ GET http://127.0.0.1:8000/exports/?exp_id=1
 Accept: application/json
 Content-Type: application/json
 
+### List Non existing export id
+GET http://127.0.0.1:8000/exports/?exp_id=1000
+Accept: application/json,text/plain
+Content-Type: application/json
+
 ### List all processing by year
 GET http://127.0.0.1:8000/exports/year/2022
 Accept: application/json
