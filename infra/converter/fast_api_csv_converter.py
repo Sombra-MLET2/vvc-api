@@ -12,6 +12,9 @@ def handle_csv_response(data, request, datasource_desc='embrapa') -> Response:
     if not isinstance(data, list):
         data = [data]
 
+    if not data:
+        return Response(content=None, media_type="text/csv", status_code=204)
+
     output = io.StringIO()
 
     writer = csv.writer(output)
