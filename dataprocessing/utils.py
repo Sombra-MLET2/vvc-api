@@ -138,6 +138,7 @@ def read_all_files():
 
     assert validate_numeric_column(expVinho_csv,'year','quantity') == True
 
+
     expEspumantes_csv = trata_csv('ExpEspumantes.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity',
                                   'category', 'Espumantes', 'País', 'country')
 
