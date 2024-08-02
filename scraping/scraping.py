@@ -95,7 +95,7 @@ def download_all_csv():
                 download_csv(get_csv_link(menu.get("link")), name.replace(" ", "-"))
             else:
                 for sub_menu in menu.get("sub_menu"):
-                    name = sub_menu.get("nome")
+                    name = f"{menu.get("nome")}-{sub_menu.get("nome")}"
                     download_csv(get_csv_link(sub_menu.get("link")), name.replace(" ", "-"))
         return {"result": "success"}
     except:

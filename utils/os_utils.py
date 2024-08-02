@@ -11,7 +11,7 @@ def remove_accentuation(string: str):
 
 
 def filter_only_letters_and_numbers(string: str):
-    return re.sub(r"[^A-Za-z0-9]", "", string)
+    return re.sub(constants.REGEX_FILE_NAME_CLENER, "", string)
 
 
 def create_directory(path: Path):
