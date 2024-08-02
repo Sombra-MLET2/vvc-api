@@ -65,32 +65,52 @@ def trata_csv(
     return arquivo
 
 def read_all_files():
+
+    # Arquivo de produção
     producao_csv = trata_csv('Producao.csv', ';', ['control'], ['id', 'produto'], 'name', 'year', 'quantity')
+
+    #Arquivos de processamento
     processa_viniferas = trata_csv('ProcessaViniferas.csv', ';', ['control'], ['id', 'cultivar'], 'cultivation', 'year',
                                    'quantity')
+
     ProcessaMesa_csv = trata_csv('ProcessaMesa.csv', '\t', ['control'], ['id', 'cultivar'], 'cultivation', 'year',
                                  'quantity')
+
     ProcessaSemclass_csv = trata_csv('ProcessaSemclass.csv', '\t', ['control'], ['id', 'cultivar'], 'cultivation',
                                      'year', 'quantity')
+
     ProcessaAmericanas_csv = trata_csv('ProcessaAmericanas.csv', '\t', ['control'], ['id', 'cultivar'], 'cultivation',
                                        'year', 'quantity')
+
+    # Arquivo de Comercio
     comercio_csv = trata_csv('Comercio.csv', ';', ['control'], ['id', 'Produto'], 'name', 'year', 'quantity')
+
+    # Arquivos de Importação
     impVinhos_csv = trata_csv('ImpVinhos.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',
                               'Vinhos', 'País', 'country')
+
     impEspumantes_csv = trata_csv('ImpEspumantes.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity',
                                   'category', 'Espumantes', 'País', 'country')
+
     impFrescas_csv = trata_csv('ImpFrescas.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',
                                'Frescas', 'País', 'country')
+
     impPassas_csv = trata_csv('ImpPassas.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',
                               'Passas', 'País', 'country')
+
     impSuco_csv = trata_csv('ImpSuco.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',
                             'Passas', 'País', 'country')
+
+    #Arquivos de Exportação
     expSuco_csv = trata_csv('ExpSuco.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',
                             'Sucos', 'País', 'country')
+
     expVinho_csv = trata_csv('ExpVinho.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',
                              'Vinhos', 'País', 'country')
+
     expEspumantes_csv = trata_csv('ExpEspumantes.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity',
                                   'category', 'Espumantes', 'País', 'country')
+
     expUva_csv = trata_csv('ExpUva.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category', 'Uvas',
                            'País', 'country')
 
