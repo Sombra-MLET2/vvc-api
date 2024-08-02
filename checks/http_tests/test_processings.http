@@ -9,7 +9,7 @@ Accept: text/csv
 Content-Type: application/json
 
 ### List all processing by product_id
-GET http://127.0.0.1:8000/processing/?prod_id=1
+GET http://127.0.0.1:8000/processing/?proc_id=1
 Accept: application/json
 Content-Type: application/json
 
@@ -24,17 +24,17 @@ Accept: application/json
 Content-Type: application/json
 
 ### List all processing by year and category
-GET http://127.0.0.1:8000/processing/category/cat_tint/year/2024
+GET http://127.0.0.1:8000/processing/category/suco1/year/2024
 Accept: application/json
 Content-Type: application/json
 
 ### List all processing by grape
-GET http://127.0.0.1:8000/processing/grape/americana
+GET http://127.0.0.1:8000/processing/grape/vinho1
 Accept: application/json
 Content-Type: application/json
 
 ### List all processing by grape and year
-GET http://127.0.0.1:8000/processing/grape/mesa/year/2022
+GET http://127.0.0.1:8000/processing/grape/vinho1/year/2024
 Accept: application/json
 Content-Type: application/json
 

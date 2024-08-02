@@ -3,18 +3,21 @@ from typing import List
 from sqlalchemy.orm import Session
 
 from dtos import CategoryDTO, ImportDTOResponse, ImportDTO
+from infra.cache.caching_keys import vvc_cache
 from models.imports import Import
 from repositories import imports_repository
 
 
-def find_imports_items(db: Session, category: str | None, year: int | None, country: str | None):
+@vvc_cache()
+async def find_imports_items(db: Session, category: str | None, year: int | None, country: str | None):
     if category is None and year is None and country is None:
         return __to_dto_list(imports_repository.find_all(db))
 
     return __to_dto_list(imports_repository.find_by(db, category, year, country))
 
 
-def find_imports_item(db: Session, imp_id: int):
+@vvc_cache()
+async def find_imports_item(db: Session, imp_id: int):
     return __to_dto(imports_repository.find_one(db, imp_id))
 
 
