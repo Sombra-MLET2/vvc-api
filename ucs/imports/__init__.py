@@ -21,9 +21,9 @@ def find_imports_item(db: Session, imp_id: int):
 def add_import_item(db: Session, dto: ImportDTO) -> ImportDTOResponse:
     return __to_dto(imports_repository.create_new(db, dto))
 
-def __to_dto(imp: Import) -> ImportDTOResponse:
+def __to_dto(imp: Import) -> ImportDTOResponse | None:
     if imp is None:
-        return ImportDTOResponse()
+        return None
 
     category = CategoryDTO(name=imp.category.name, meta_name=imp.category.meta_name)
 

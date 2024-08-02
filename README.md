@@ -36,8 +36,45 @@ vvc-api$ source env/bin/activate
 ### VVC-API Schema
 ![VVC DB Schema](imgs/vvc-schema.png)
 
+### VVC-API Domain Mapping
 
-### Structure
+#### Production Domain
+* **Embrapa Domain**: Produção
+* **Data Categories**: N/A (Single CSV file)
+* **Database Table**: productions
+* The _Produção.csv_ file encompasses all production data without further categorization.
+
+
+#### Processing Domain
+
+**Embrapa Domain**: Processamento
+* **Data Categories**: Viníferas, Americanas e híbridas, Uvas de mesa, Sem classificação
+* **Database Table**: processing
+* Has multiple CSV files (_ProcessaViniferas.csv, ProcessaAmericanas.csv, ProcessaMesa.csv, ProcessaSemclass.csv_) describing its categories.
+
+#### Commercialization Domain
+
+* **Embrapa Domain**: Comercialização
+* **Data Categories**: N/A (Single CSV file)
+* **Database Table**: sales
+* The Comercio.csv file contains all commercialization data and will be mapped to the **sales** table.
+
+#### Imports Domain
+
+* **Embrapa Domain**: Importação
+* **Data Categories**: Vinhos de mesa, Espumantes, Uvas frescas, Uvas passas, Suco de uva
+* **Database Table**: imports
+* The import data is categorized into multiple CSV files (ImpVinhos.csv, ImpEspumantes.csv, ImpFrescas.csv, ImpPassas.csv, ImpSuco.csv). 
+
+#### Exports Domain
+
+* **Embrapa Domain**: Exportação
+* **Data Categories**: Vinhos de mesa, Espumantes, Uvas frescas, Suco de uva
+* **Database Table**: exports
+* Similar to the imports domain, exports data is categorized into multiple CSV files (with similar naming conventions also).
+
+
+### Project Internal Structure
 
 ```
 ├── appscheduler

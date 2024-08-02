@@ -18,9 +18,18 @@ PATH_DOWNLOADED_FILES: Final = APP_ROOT_PATH.joinpath("files/downloaded/")
 # Caminho para a pasta de arquivos pos processados
 PATH_PROCESSED_FILES: Final = APP_ROOT_PATH.joinpath("files/processed/")
 
+REGEX_FILE_NAME_CLENER = r"[^A-Za-z0-9\-]"
+
 # Cria o nome do arquivo CSV com base no nome e timestamp
 CSV_FILE = lambda name, timestamp: f'{name}-{timestamp}.csv'
 
 # Cria o caminho completo para o arquivo CSV baixado
 FULL_CSV_FILE_DOWNLOAD_PATH = lambda name, timestamp: PATH_DOWNLOADED_FILES.joinpath(CSV_FILE(name=name, timestamp=timestamp))
-    
+
+# Prefixos dos arquivos CSVs baixados. 
+class csvs:
+    COMERCIALIZACAO = "comercializacao"
+    EXPORTACAO = "exportacao"
+    IMPORTACAO = "importacao"
+    PROCESSAMENTO = "processamento"
+    PRODUCAO = "producao"

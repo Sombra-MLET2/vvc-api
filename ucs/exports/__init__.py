@@ -21,9 +21,9 @@ def find_exports_item(db: Session, exp_id: int):
 def add_export_item(db: Session, dto: ExportDTO) -> ExportDTOResponse:
     return __to_dto(exports_repository.create_new(db, dto))
 
-def __to_dto(exp: Export) -> ExportDTOResponse:
+def __to_dto(exp: Export) -> ExportDTOResponse | None:
     if exp is None:
-        return ExportDTOResponse()
+        return None
 
     category = CategoryDTO(name=exp.category.name, meta_name=exp.category.meta_name)
 

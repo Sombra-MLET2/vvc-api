@@ -3,6 +3,7 @@ import logging
 from fastapi import FastAPI
 
 from appscheduler.scheduler import start_scheduler, stop_scheduler
+from infra.cache.caching import cache_startup
 from infra.database.database import Base, engine
 from routes.categories_router import router as categories_router
 from routes.exports_router import router as exports_router
@@ -26,7 +27,6 @@ app.include_router(sales_router)
 app.include_router(exports_router)
 app.include_router(imports_router)
 
-# Enabling caching module
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -52,6 +52,7 @@ async def stop_tasks_scheduler():
 @app.on_event("startup")
 async def startup_event():
     start_scheduler()
+    await cache_startup()
     
 
 @app.on_event("shutdown")
