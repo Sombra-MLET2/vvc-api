@@ -29,14 +29,14 @@ logger = logging.getLogger(__name__)
             response_model=List[SaleDTOResponse] | SaleDTOResponse,)
 async def list_sales(request: Request, db: Session = Depends(get_db), sale_id: int | None = None):
     if sale_id:
-        prod = find_sales_item(db, sale_id)
+        prod = await find_sales_item(db, sale_id)
 
         if not prod:
             return Response(status_code=404)
 
         return prod
 
-    return handle_csv_response(find_sales_items(db, None, None), request, "sales_all")
+    return handle_csv_response(await find_sales_items(db, None, None), request, "sales_all")
 
 
 @router.get("/year/{year}",
@@ -44,20 +44,20 @@ async def list_sales(request: Request, db: Session = Depends(get_db), sale_id: i
             description="Get sales items by `year`",
             response_model=List[SaleDTOResponse])
 async def list_sales_by_year(db: Session = Depends(get_db), year: int = None):
-    return find_sales_items(db, None, year)
+    return await find_sales_items(db, None, year)
 
 
 @router.get("/category/{category}", summary="Sale resource list by category",
             description="Get sales items by `category`: tinto, branco, etc.",
             response_model=List[SaleDTOResponse])
 async def list_sales_by_category(db: Session = Depends(get_db), category: str = None):
-    return find_sales_items(db, category, None)
+    return await find_sales_items(db, category, None)
 
 
 @router.get("/category/{category}/year/{year}", summary="Sale resource list by category and year",
             description="Get sales items by `category` and `year`", response_model=List[SaleDTOResponse])
 async def list_sales_by_category_and_year(db: Session = Depends(get_db), category: str = None, year: int = None):
-    return find_sales_items(db, category, year)
+    return await find_sales_items(db, category, year)
 
 
 @router.post("/", summary="Sale resource add item",

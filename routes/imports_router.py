@@ -28,14 +28,14 @@ logger = logging.getLogger(__name__)
             response_model=List[ImportDTOResponse] | ImportDTOResponse,)
 async def list_imports(request: Request, db: Session = Depends(get_db), imp_id: int | None = None):
     if imp_id:
-        prod = find_imports_item(db, imp_id)
+        prod = await find_imports_item(db, imp_id)
 
         if not prod:
             return Response(status_code=404)
 
         return prod
 
-    return handle_csv_response(find_imports_items(db, None, None, None), request, "imports_all")
+    return handle_csv_response(await find_imports_items(db, None, None, None), request, "imports_all")
 
 
 @router.get("/year/{year}",
@@ -43,34 +43,34 @@ async def list_imports(request: Request, db: Session = Depends(get_db), imp_id: 
             description="Get imports items by `year`",
             response_model=List[ImportDTOResponse])
 async def list_imports_by_year(db: Session = Depends(get_db), year: int = None):
-    return find_imports_items(db, None, year, None)
+    return await find_imports_items(db, None, year, None)
 
 
 @router.get("/category/{category}", summary="Import resource list by category",
             description="Get imports items by `category`: tinto, branco, etc.",
             response_model=List[ImportDTOResponse])
 async def list_imports_by_category(db: Session = Depends(get_db), category: str = None):
-    return find_imports_items(db, category, None, None)
+    return await find_imports_items(db, category, None, None)
 
 
 @router.get("/country/{country}", summary="Import resource list by country",
             description="Get imports items by `country`: Brasil, Chile, etc.",
             response_model=List[ImportDTOResponse])
 async def list_imports_by_category(db: Session = Depends(get_db), country: str = None):
-    return find_imports_items(db, None, None, country)
+    return await find_imports_items(db, None, None, country)
 
 
 @router.get("/category/{category}/year/{year}", summary="Import resource list by category and year",
             description="Get imports items by `category` and `year`", response_model=List[ImportDTOResponse])
 async def list_imports_by_category_and_year(db: Session = Depends(get_db), category: str = None, year: int = None):
-    return find_imports_items(db, category, year, None)
+    return await find_imports_items(db, category, year, None)
 
 
 @router.get("/country/{country}/year/{year}", summary="Import resource list by country and year",
             description="Get imports items by `country` and `year`",
             response_model=List[ImportDTOResponse])
 async def list_imports_by_category(db: Session = Depends(get_db), country: str = None, year: str = None):
-    return find_imports_items(db, None, year, country)
+    return await find_imports_items(db, None, year, country)
 
 
 @router.post("/", summary="Import resource add item",

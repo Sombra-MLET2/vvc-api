@@ -4,7 +4,7 @@
 
 * Python 12.x
 * [FastApi 0.111.x](https://fastapi.tiangolo.com/tutorial/)
-* [FastApi - Cache 0.2.1](https://pypi.org/project/fastapi-cache2/)
+* [AIOCache 0.12.2](https://pypi.org/project/aiocache/)
 * [SQLAlchemy 2.x](https://docs.sqlalchemy.org/en/20/contents.html)
 
 ## Configuring Environment

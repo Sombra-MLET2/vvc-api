@@ -29,14 +29,14 @@ logger = logging.getLogger(__name__)
             response_model=List[ProductionDTOResponse] | ProductionDTOResponse,)
 async def list_productions(request: Request, db: Session = Depends(get_db), prod_id: int | None = None):
     if prod_id:
-        prod = find_production_item(db, prod_id)
+        prod = await find_production_item(db, prod_id)
 
         if not prod:
             return Response(status_code=404)
 
         return prod
 
-    return handle_csv_response(find_production_items(db, None, None), request, "production_all")
+    return handle_csv_response(await find_production_items(db, None, None), request, "production_all")
 
 
 @router.get("/year/{year}",
@@ -44,20 +44,20 @@ async def list_productions(request: Request, db: Session = Depends(get_db), prod
             description="Get production items by `year`",
             response_model=List[ProductionDTOResponse])
 async def list_productions_by_year(db: Session = Depends(get_db), year: int = None):
-    return find_production_items(db, None, year)
+    return await find_production_items(db, None, year)
 
 
 @router.get("/category/{category}", summary="Production resource list by category",
             description="Get production items by `category`: tinto, branco, etc.",
             response_model=List[ProductionDTOResponse])
 async def list_productions_by_category(db: Session = Depends(get_db), category: str = None):
-    return find_production_items(db, category, None)
+    return await find_production_items(db, category, None)
 
 
 @router.get("/category/{category}/year/{year}", summary="Production resource list by category and year",
             description="Get production items by `category` and `year`", response_model=List[ProductionDTOResponse])
 async def list_productions_by_category_and_year(db: Session = Depends(get_db), category: str = None, year: int = None):
-    return find_production_items(db, category, year)
+    return await find_production_items(db, category, year)
 
 
 @router.post("/", summary="Production resource add item",

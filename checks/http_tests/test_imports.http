@@ -9,7 +9,7 @@ Accept: text/csv
 Content-Type: application/json
 
 ### List all processing by product_id
-GET http://127.0.0.1:8000/imports/?exp_id=1
+GET http://127.0.0.1:8000/imports/?imp_id=1
 Accept: application/json
 Content-Type: application/json
 

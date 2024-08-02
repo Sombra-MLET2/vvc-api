@@ -28,46 +28,46 @@ logger = logging.getLogger(__name__)
             response_model=List[ProcessingDTOResponse] | ProcessingDTOResponse)
 async def list_processing(request: Request, db: Session = Depends(get_db), proc_id: int | None = None):
     if proc_id:
-        proc = find_processing_item(db, proc_id)
+        proc = await find_processing_item(db, proc_id)
 
         if not proc:
             return Response(status_code=404)
 
         return proc
 
-    return handle_csv_response(find_processing_items(db, None, None, None), request, "processing_all")
+    return handle_csv_response(await find_processing_items(db, None, None, None), request, "processing_all")
 
 
 @router.get("/year/{year}", summary="Processing resource list by year", description="Get processing items by `year`",
             response_model=List[ProcessingDTOResponse])
 async def list_processing_by_year(db: Session = Depends(get_db), year: int = None):
-    return find_processing_items(db, None, year, None)
+    return await find_processing_items(db, None, year, None)
 
 
 @router.get("/category/{category}", summary="Processing resource list by category",
             description="Get processing items by `category`: tinto, branco, etc.",
             response_model=List[ProcessingDTOResponse])
 async def list_processing_by_category(db: Session = Depends(get_db), category: str = None):
-    return find_processing_items(db, category, None, None)
+    return await find_processing_items(db, category, None, None)
 
 
 @router.get("/grape/{grape}", summary="Processing resource list by grape class",
             description="Get processing items by `grape class`: mesa, hibrida, americana, etc.",
             response_model=List[ProcessingDTOResponse])
 async def list_processing_by_category(db: Session = Depends(get_db), grape: str = None):
-    return find_processing_items(db, None, None, grape)
+    return await find_processing_items(db, None, None, grape)
 
 
 @router.get("/grape/{grape}/year/{year}", summary="Processing resource list by grape class and year",
             description="Get processing items by `grape class` and `year`.", response_model=List[ProcessingDTOResponse])
 async def list_processing_by_category(db: Session = Depends(get_db), grape: str = None, year: int = None):
-    return find_processing_items(db, None, year, grape)
+    return await find_processing_items(db, None, year, grape)
 
 
 @router.get("/category/{category}/year/{year}", summary="Processing resource list by category and year",
             description="Get processing items by `category` and `year`", response_model=List[ProcessingDTOResponse])
 async def list_processing_by_category_year(db: Session = Depends(get_db), category: str = None, year: int = None):
-    return find_processing_items(db, category, year, None)
+    return await find_processing_items(db, category, year, None)
 
 
 @router.post("/", summary="Processing resource add item",
