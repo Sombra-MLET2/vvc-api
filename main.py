@@ -2,6 +2,7 @@ import logging
 
 from fastapi import FastAPI
 
+from infra.config import vvc_config
 from appscheduler.scheduler import start_scheduler, stop_scheduler
 from infra.database.database import Base, engine
 from routes.categories_router import router as categories_router
@@ -12,6 +13,8 @@ from routes.productions_router import router as productions_router
 from routes.sales_router import router as sales_router
 from routes.scrping_router import router as scraping_router
 from routes.users_router import router as users_router
+
+logging.info(f"*** VVC API running on {vvc_config.ENV} environment ***")
 
 # SQLAlchemy create tables
 Base.metadata.create_all(bind=engine)

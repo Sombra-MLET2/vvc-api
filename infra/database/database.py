@@ -4,9 +4,12 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./vvc-fiap.db"
+from infra.config import vvc_config
 
-logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+if vvc_config.ENV == 'dev':
+    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+else:
+    logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
 
 
 # Forcando SQLite a verificar foreign keys
@@ -15,7 +18,7 @@ def _fk_pragma_on_connect(dbapi_con, con_record):
 
 
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+    vvc_config.SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
 
 event.listen(engine, 'connect', _fk_pragma_on_connect)
