@@ -14,6 +14,11 @@ def filter_only_letters_and_numbers(string: str):
     return re.sub(constants.REGEX_FILE_NAME_CLENER, "", string)
 
 
+def move_file(origin_path: Path, destination_path: Path):
+    create_directory(destination_path)
+    origin_path.rename(destination_path)
+
+
 def create_directory(path: Path):
     if not path.parent.exists():
         path.parent.mkdir(parents=True)

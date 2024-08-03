@@ -101,7 +101,7 @@ vvc-api$ source env/bin/activate
     └── ...
 ```
 
-* **appscheduler** - Scheduler logic & job setup to map and scrape Embrapa csv datasets
+* **appscheduler** - Scheduler logic & job setup to map and scrape [Embrapa](http://vitibrasil.cnpuv.embrapa.br/index.php?opcao=opt_01) csv datasets
 * **Dockerfile** - Minimal configuration to build an image
 * **infra** - Database, repositories and other infra-related scripts
 * **models** - Core models of this API
