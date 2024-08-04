@@ -24,6 +24,18 @@ def create_new(db: Session, dto: ProductionDTO) -> Production:
     return db_obj
 
 
+def create_new(db: Session, data: list):
+    db_obj = [Production(**_dto.model_dump()) for _dto in data]
+
+    try:
+        db.add_all(db_obj)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        logging.error(f'Error while creating production item: {e}')
+        raise Exception(e)
+
+
 def find_all(db: Session) -> List[Production]:
     return find_by(db, None, None)
 
@@ -31,6 +43,12 @@ def find_all(db: Session) -> List[Production]:
 def find_one(db: Session, prod_id: int) -> Production:
     return db.query(Production).filter(Production.id == prod_id).first()
 
+
+def find_one(db: Session, dto: ProductionDTO) -> Production:
+    return db.query(Production).filter(Production.name == dto.name,
+                                       Production.quantity == dto.quantity,
+                                       Production.year == dto.year,
+                                       Production.category_id == dto.category_id).first()
 
 def find_by(db: Session, category: str | None, year: int | None) -> List[Production]:
     query = (db.query(Production)

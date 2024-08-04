@@ -80,7 +80,7 @@ vvc-api$ source env/bin/activate
 
 ```
 ├── appscheduler
-├── dataimport – módulo de importação dos CSVs, responsável por gerenciar o processo e delegar para os parsers. 
+├── dataprocessing – módulo de importação dos CSVs, responsável por gerenciar o processo e delegar para os parsers. 
 ├── Dockerfile
 ├── dtos
 ├── infra

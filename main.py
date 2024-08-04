@@ -4,6 +4,7 @@ from fastapi import FastAPI
 
 from infra.config import vvc_config
 from appscheduler.scheduler import start_scheduler, stop_scheduler
+from dataprocessing import start_parser_files
 from infra.database.database import Base, engine
 from routes.categories_router import router as categories_router
 from routes.exports_router import router as exports_router
@@ -49,6 +50,12 @@ async def root():
 async def stop_tasks_scheduler():
     stop_scheduler()
     return {"message": "scheduler is stop"}
+
+
+@app.get("/import_data")
+async def stop_tasks_scheduler():
+    start_parser_files()
+    return {"message": "Init processing files"}
 
 
 @app.on_event("startup")

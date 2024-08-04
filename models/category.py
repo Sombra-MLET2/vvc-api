@@ -9,3 +9,6 @@ class Category(Base):
     id = Column(Integer, autoincrement=True, primary_key=True)
     name = Column(String, unique=True, nullable=False)
     meta_name = Column(String, unique=True, nullable=True)
+
+    def __repr__(self):
+        return f"Category [id={self.id}, name={self.name}, meta_name={self.meta_name}]"
