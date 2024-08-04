@@ -1,8 +1,7 @@
 import logging
 
 from sqlalchemy import create_engine, event
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 from infra.config import vvc_config
 
@@ -21,7 +20,8 @@ engine = create_engine(
     vvc_config.SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
 
-event.listen(engine, 'connect', _fk_pragma_on_connect)
+if vvc_config.ENV == 'dev':
+    event.listen(engine, 'connect', _fk_pragma_on_connect)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

@@ -2,3 +2,5 @@
 __pycache__/
 env/
 vvc-fiap.db
+.coverage
+htmlcov/
