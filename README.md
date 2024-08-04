@@ -6,18 +6,20 @@
 * [FastApi 0.111.x](https://fastapi.tiangolo.com/tutorial/)
 * [AIOCache 0.12.2](https://pypi.org/project/aiocache/)
 * [SQLAlchemy 2.x](https://docs.sqlalchemy.org/en/20/contents.html)
+* [SQLite3](https://www.sqlite.org/index.html)
 
 ## Configuring Environment
 
 1. Install [Python 3.12](https://www.python.org/downloads/)
-2. Create a virtual env and install dependencies
+2. Checkout and navigate to project's folder
+3. Create a virtual env and install dependencies
 ```bash
 vvc-api$ python3.12 -m venv ./env
 vvc-api$ source env/bin/activate
 (env) vvc-api$ pip install -r requirements.txt
 ```
-3. Inspect/Edit with your preferred IDE
-4. Run or Build a docker image
+4. Inspect/Edit with your preferred IDE
+5. Run or Build a docker image
 ```bash
 (env) vvc-api$ fastapi dev main.py --port 8000
 ```
@@ -25,7 +27,7 @@ vvc-api$ source env/bin/activate
 (env) vvc-api$ docker build -t vvc-api .
 (env) vvc-api$ docker run [-d] -p 8000:8000 vvc-api:latest
 ```
-5. Optionally, run tests from `test_main.http`
+6. Optionally, run tests from `test_main.http`
 
 ## Project Structure
 
@@ -78,6 +80,7 @@ vvc-api$ source env/bin/activate
 
 ```
 ├── appscheduler
+├── dataimport – módulo de importação dos CSVs, responsável por gerenciar o processo e delegar para os parsers. 
 ├── Dockerfile
 ├── dtos
 ├── infra
@@ -109,6 +112,11 @@ vvc-api$ source env/bin/activate
 * **routes** - FastAPI routes definition scripts
 * **scraping** - Selenium/FF based scraping component 
 * **ucs** - API use cases 
+
+### Tests && Coverage
+
+* `pytest` - Run all available tests
+* `./run_test_coverage.sh` - Run testes & generate coverage report
 
 ### API Docs
 
