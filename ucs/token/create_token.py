@@ -3,10 +3,12 @@ from datetime import timedelta, datetime, timezone
 
 import jwt
 
+from infra.config import vvc_config
+
 # Oauth JWT
-SECRET_KEY = '8e8e092f6c6d48839b5b514b3edb7d57'
+SECRET_KEY = vvc_config.JWT_SECRET
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = vvc_config.JWT_EXPIRY
 
 
 logger = logging.getLogger(__name__)
