@@ -32,14 +32,25 @@ vvc-api$ source env/bin/activate
 ## Project Structure
 
 ### VVC-API Components
+<details closed>
+  <summary>click to collapse</summary>
+    
 ![VVC Api Main Components](imgs/vvc-comps.png)
 
+</details>
 
 ### VVC-API Schema
+<details closed>
+  <summary>click to collapse</summary>
+    
 ![VVC DB Schema](imgs/vvc-schema.png)
 
-### VVC-API Domain Mapping
+</details>
 
+### VVC-API Domain Mapping
+<details closed>
+  <summary>click to collapse</summary>
+  
 #### Production Domain
 * **Embrapa Domain**: Produção
 * **Data Categories**: N/A (Single CSV file)
@@ -75,9 +86,13 @@ vvc-api$ source env/bin/activate
 * **Database Table**: exports
 * Similar to the imports domain, exports data is categorized into multiple CSV files (with similar naming conventions also).
 
+</details>
 
 ### Project Internal Structure
 
+<details closed>
+  <summary>click to collapse</summary>
+    
 ```
 ├── appscheduler
 ├── dataprocessing – módulo de importação dos CSVs, responsável por gerenciar o processo e delegar para os parsers. 
@@ -112,6 +127,8 @@ vvc-api$ source env/bin/activate
 * **routes** - FastAPI routes definition scripts
 * **scraping** - Selenium/FF based scraping component 
 * **ucs** - API use cases 
+
+</details>
 
 ### Tests && Coverage
 
