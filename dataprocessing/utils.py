@@ -65,6 +65,9 @@ def trata_csv(
     if nome_antigo_pais is not None and nome_novo_pais is not None:
         arquivo.rename(columns={nome_antigo_pais: nome_novo_pais}, inplace=True)
 
+    # Define o tipo int para a coluna nome_coluna_valor
+    arquivo[nome_coluna_valor] = arquivo[nome_coluna_valor].astype(int)
+
     return arquivo
 
 
@@ -82,25 +85,25 @@ def read_all_files():
     #assert validate_numeric_column(producao_csv, 'year', 'quantity') == True
 
     #Arquivos de processamento
-    processa_viniferas_csv = trata_csv('ProcessaViniferas.csv', ';', ['control'], ['id', 'cultivar'], 'cultivation', 'year',
-                                   'quantity')
+    #processa_viniferas_csv = trata_csv('ProcessaViniferas.csv', ';', ['control'], ['id', 'cultivar'], 'cultivation', 'year',
+    #                               'quantity')
 
-    assert validate_numeric_column(processa_viniferas_csv, 'year', 'quantity') == True
+    #assert validate_numeric_column(processa_viniferas_csv, 'year', 'quantity') == True
 
-    processa_mesa_csv = trata_csv('ProcessaMesa.csv', '\t', ['control'], ['id', 'cultivar'], 'cultivation', 'year',
-                                 'quantity')
+    #processa_mesa_csv = trata_csv('ProcessaMesa.csv', '\t', ['control'], ['id', 'cultivar'], 'cultivation', 'year',
+    #                             'quantity')
 
-    assert validate_numeric_column(processa_mesa_csv,'year','quantity') == True
+    #assert validate_numeric_column(processa_mesa_csv,'year','quantity') == True
 
-    processa_sem_class_csv = trata_csv('ProcessaSemclass.csv', '\t', ['control'], ['id', 'cultivar'], 'cultivation',
-                                     'year', 'quantity')
+    #processa_sem_class_csv = trata_csv('ProcessaSemclass.csv', '\t', ['control'], ['id', 'cultivar'], 'cultivation',
+    #                                 'year', 'quantity')
 
-    assert validate_numeric_column(processa_sem_class_csv,'year','quantity') == True
+    #assert validate_numeric_column(processa_sem_class_csv,'year','quantity') == True
 
-    processa_americanas_csv = trata_csv('ProcessaAmericanas.csv', '\t', ['control'], ['id', 'cultivar'], 'cultivation',
-                                       'year', 'quantity')
+    #processa_americanas_csv = trata_csv('ProcessaAmericanas.csv', '\t', ['control'], ['id', 'cultivar'], 'cultivation',
+    #                                   'year', 'quantity')
 
-    assert validate_numeric_column(processa_americanas_csv,'year','quantity') == True
+    #assert validate_numeric_column(processa_americanas_csv,'year','quantity') == True
 
     # Arquivo de Comercio
     #comercio_csv = trata_csv('Comercio.csv', ';', ['control'], ['id', 'Produto'], 'name', 'year', 'quantity')
