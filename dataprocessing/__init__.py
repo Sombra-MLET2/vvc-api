@@ -61,5 +61,6 @@ def start_parser_files():
     for csv_file in only_csv_files:
         _forward_to_parser(csv_file)
 
+    running = False 
     logger.info("End data processing.")
 

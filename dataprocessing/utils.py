@@ -1,5 +1,5 @@
 import pandas as pd
-import pytest
+#import pytest
 from dataprocessing.tests import validate_numeric_column
 
 def trata_csv(
@@ -69,11 +69,17 @@ def trata_csv(
 
 
 def read_all_files():
+    '''
+    ================================
+    Os codigos fonte abaixo comentado estão sendo migrados para os seus respectivos 
+    parsers em: “./parsears/*_parser.py”.
+    ================================
+    '''
 
     # Arquivo de produção
-    producao_csv = trata_csv('Producao.csv', ';', ['control'], ['id', 'produto'], 'name', 'year', 'quantity')
+    #producao_csv = trata_csv('Producao.csv', ';', ['control'], ['id', 'produto'], 'name', 'year', 'quantity')
 
-    assert validate_numeric_column(producao_csv, 'year', 'quantity') == True
+    #assert validate_numeric_column(producao_csv, 'year', 'quantity') == True
 
     #Arquivos de processamento
     processa_viniferas_csv = trata_csv('ProcessaViniferas.csv', ';', ['control'], ['id', 'cultivar'], 'cultivation', 'year',
@@ -97,9 +103,9 @@ def read_all_files():
     assert validate_numeric_column(processa_americanas_csv,'year','quantity') == True
 
     # Arquivo de Comercio
-    comercio_csv = trata_csv('Comercio.csv', ';', ['control'], ['id', 'Produto'], 'name', 'year', 'quantity')
+    #comercio_csv = trata_csv('Comercio.csv', ';', ['control'], ['id', 'Produto'], 'name', 'year', 'quantity')
 
-    assert validate_numeric_column(comercio_csv, 'year', 'quantity') == True
+    #assert validate_numeric_column(comercio_csv, 'year', 'quantity') == True
 
     # Arquivos de Importação
     impVinhos_csv = trata_csv('ImpVinhos.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',

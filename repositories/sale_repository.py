@@ -24,12 +24,31 @@ def create_new(db: Session, dto: SaleDTO) -> Sale:
     return db_obj
 
 
+def create_new(db: Session, data: list):
+    db_obj = [Sale(**_dto.model_dump()) for _dto in data]
+
+    try:
+        db.add_all(db_obj)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        logging.error(f'Error while creating production item: {e}')
+        raise Exception(e)
+
+
 def find_all(db: Session) -> List[Sale]:
     return find_by(db, None, None)
 
 
 def find_one(db: Session, sale_id: int) -> Sale:
     return db.query(Sale).filter(Sale.id == sale_id).first()
+
+
+def find_one(db: Session, dto: SaleDTO) -> Sale:
+    return db.query(Sale).filter(Sale.name == dto.name,
+                                 Sale.quantity == dto.quantity,
+                                 Sale.year == dto.year,
+                                 Sale.category_id == dto.category_id).first()
 
 
 def find_by(db: Session, category: str | None, year: int | None) -> List[Sale]:
