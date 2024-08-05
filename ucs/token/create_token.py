@@ -7,7 +7,7 @@ from infra.config import vvc_config
 
 # Oauth JWT
 SECRET_KEY = vvc_config.JWT_SECRET
-ALGORITHM = "HS256"
+ALGORITHM = vvc_config.JWT_ALGORITHM
 ACCESS_TOKEN_EXPIRE_MINUTES = vvc_config.JWT_EXPIRY
 
 

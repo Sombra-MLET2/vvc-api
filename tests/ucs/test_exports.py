@@ -1,26 +1,26 @@
-import pytest
 from unittest.mock import MagicMock
 from unittest.mock import patch
-from typing import List
+
+import pytest
+
+import ucs.exports
 from dtos import CategoryDTO, ExportDTOResponse, ExportDTO
 from models.category import Category
 from models.country import Country
-from models.exports import Export as ExportModel
-
-import ucs.exports
+from models.exports import Export
 
 
 @pytest.fixture
 def export():
-    Export = MagicMock(spec=ExportModel)
-    Export.id = 1
-    Export.quantity = 100
-    Export.year = 2023
-    Export.country.name = "country"
-    Export.category.name = "name"
-    Export.category.meta_name = "meta_name"
+    export_model = MagicMock(spec=Export)
+    export_model.id = 1
+    export_model.quantity = 100
+    export_model.year = 2023
+    export_model.country.name = "country"
+    export_model.category.name = "name"
+    export_model.category.meta_name = "meta_name"
 
-    return Export
+    return export_model
 
 
 @pytest.fixture
@@ -57,7 +57,7 @@ async def test_find_exports_items_no_params(mocked_find_all, exports):
 def test_add_export_item():
     session = MagicMock()
     dto = ExportDTO(id=42, quantity=100, value=20000, year=2077, country_id=123, category_id=42)
-    repository_response = ExportModel(id=42, quantity=100, value=20000, year=2077, category_id=42,
+    repository_response = Export(id=42, quantity=100, value=20000, year=2077, category_id=42,
                                       category=Category(id=2, name="Category", meta_name="meta_cat"), country_id=22,
                                       country=Country(id=1, name="Country"))
 
