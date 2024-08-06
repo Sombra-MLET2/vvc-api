@@ -26,12 +26,32 @@ def create_new(db: Session, dto: ExportDTO) -> Export:
     return db_obj
 
 
+def create_new(db: Session, data: list):
+    db_obj = [Export(**_dto.model_dump()) for _dto in data]
+
+    try:
+        db.add_all(db_obj)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        logging.error(f'Error while creating export item: {e}')
+        raise Exception(e)
+
+
 def find_all(db: Session) -> List[Export]:
     return find_by(db, None, None, None)
 
 
 def find_one(db: Session, exp_id: int) -> Export:
     return db.query(Export).filter(Export.id == exp_id).first()
+
+
+def find_one(db: Session, dto: ExportDTO) -> Export:
+    return db.query(Export).filter(Export.quantity == dto.quantity,
+                                   Export.value == dto.value,
+                                   Export.year == dto.year,
+                                   Export.category_id == dto.category_id,
+                                   Export.country_id == dto.country_id).first()
 
 
 def find_by(db: Session, category: str | None, year: int | None, country: str | None) -> List[Export]:

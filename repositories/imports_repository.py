@@ -26,12 +26,32 @@ def create_new(db: Session, dto: ImportDTO) -> Import:
     return db_obj
 
 
+def create_new(db: Session, data: list):
+    db_obj = [Import(**_dto.model_dump()) for _dto in data]
+
+    try:
+        db.add_all(db_obj)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        logging.error(f'Error while creating import item: {e}')
+        raise Exception(e)
+
+
 def find_all(db: Session) -> List[Import]:
     return find_by(db, None, None, None)
 
 
 def find_one(db: Session, imp_id: int) -> Import:
     return db.query(Import).filter(Import.id == imp_id).first()
+
+
+def find_one(db: Session, dto: ImportDTO) -> Import:
+    return db.query(Import).filter(Import.quantity == dto.quantity,
+                                   Import.value == dto.value,
+                                   Import.year == dto.year,
+                                   Import.category_id == dto.category_id,
+                                   Import.country_id == dto.country_id).first()
 
 
 def find_by(db: Session, category: str | None, year: int | None, country: str | None) -> List[Import]:

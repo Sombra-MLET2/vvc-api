@@ -1,5 +1,4 @@
 import pandas as pd
-#import pytest
 from dataprocessing.tests import validate_numeric_column
 
 def trata_csv(
@@ -73,18 +72,28 @@ def trata_csv(
         arquivo = separar_preco_quantidade(df_arquivo=arquivo,
                                            nome_coluna_ano=nome_coluna_ano,
                                            nome_coluna_valor=nome_coluna_valor,
+                                           nome_coluna_tipo=nome_coluna_tipo,
                                            nome_novo_pais=nome_novo_pais,
                                            nome_coluna_preco=nome_coluna_preco)
 
     return arquivo
 
 
-def separar_preco_quantidade(df_arquivo, nome_coluna_ano: str, nome_coluna_valor: str, nome_novo_pais: str, nome_coluna_preco: str):
+def separar_preco_quantidade(df_arquivo, 
+                             nome_coluna_ano: str, 
+                             nome_coluna_valor: str, 
+                             nome_coluna_tipo: str, 
+                             nome_novo_pais: str, 
+                             nome_coluna_preco: str):
+    
+    # Regex para identificar anos com ponto. Exemplo: 1970.1, 1971.1, 1972.1
+    regex_ano_com_ponto = r'^\d{4}\.1$'
+
     # Filtra os valores para a coluna preco.
-    df_arquivo[nome_coluna_preco] = df_arquivo[nome_coluna_valor].where(df_arquivo[nome_coluna_ano].str.match(r'^\d{4}\.1$'))
+    df_arquivo[nome_coluna_preco] = df_arquivo[nome_coluna_valor].where(df_arquivo[nome_coluna_ano].str.match(regex_ano_com_ponto))
     
     # Filtra os valores para coluna quantidade.
-    df_arquivo[nome_coluna_valor] = df_arquivo[nome_coluna_valor].where(~df_arquivo[nome_coluna_ano].str.match(r'^\d{4}\.1$'))
+    df_arquivo[nome_coluna_valor] = df_arquivo[nome_coluna_valor].where(~df_arquivo[nome_coluna_ano].str.match(regex_ano_com_ponto))
 
     # Remove ".1" das linhas da coluna ano.
     df_arquivo[nome_coluna_ano] = df_arquivo[nome_coluna_ano].apply(lambda x: x.split('.')[0]) 
@@ -93,97 +102,10 @@ def separar_preco_quantidade(df_arquivo, nome_coluna_ano: str, nome_coluna_valor
     df_arquivo.fillna(0, inplace=True)
 
     # Agrupa por pais e ano e aplica a soma nas colunas preco e quantidade para eliminar os ZEROS e unificar as linhas. 
-    df_arquivo_gp = df_arquivo.groupby([nome_novo_pais, nome_coluna_ano]).agg({nome_coluna_valor: 'sum', nome_coluna_preco: 'sum'}).reset_index()
+    df_arquivo_gp = df_arquivo.groupby([nome_novo_pais, nome_coluna_ano, nome_coluna_tipo]).agg({nome_coluna_valor: 'sum', nome_coluna_preco: 'sum'}).reset_index()
 
-    # Define a coluna preco e quantidade com o tipo int. 
-    df_arquivo_gp[[nome_coluna_preco, nome_coluna_valor]] = df_arquivo_gp[[nome_coluna_preco, nome_coluna_valor]].astype(int)
+    # Define a coluna quantidade com o tipo int. 
+    df_arquivo_gp[nome_coluna_valor] = df_arquivo_gp[nome_coluna_valor].astype(int)
 
     return df_arquivo_gp
 
-
-def read_all_files():
-    '''
-    ================================
-    Os codigos fonte abaixo comentado estão sendo migrados para os seus respectivos 
-    parsers em: “./parsears/*_parser.py”.
-    ================================
-    '''
-
-    # Arquivo de produção
-    #producao_csv = trata_csv('Producao.csv', ';', ['control'], ['id', 'produto'], 'name', 'year', 'quantity')
-
-    #assert validate_numeric_column(producao_csv, 'year', 'quantity') == True
-
-    #Arquivos de processamento
-    #processa_viniferas_csv = trata_csv('ProcessaViniferas.csv', ';', ['control'], ['id', 'cultivar'], 'cultivation', 'year',
-    #                               'quantity')
-
-    #assert validate_numeric_column(processa_viniferas_csv, 'year', 'quantity') == True
-
-    #processa_mesa_csv = trata_csv('ProcessaMesa.csv', '\t', ['control'], ['id', 'cultivar'], 'cultivation', 'year',
-    #                             'quantity')
-
-    #assert validate_numeric_column(processa_mesa_csv,'year','quantity') == True
-
-    #processa_sem_class_csv = trata_csv('ProcessaSemclass.csv', '\t', ['control'], ['id', 'cultivar'], 'cultivation',
-    #                                 'year', 'quantity')
-
-    #assert validate_numeric_column(processa_sem_class_csv,'year','quantity') == True
-
-    #processa_americanas_csv = trata_csv('ProcessaAmericanas.csv', '\t', ['control'], ['id', 'cultivar'], 'cultivation',
-    #                                   'year', 'quantity')
-
-    #assert validate_numeric_column(processa_americanas_csv,'year','quantity') == True
-
-    # Arquivo de Comercio
-    #comercio_csv = trata_csv('Comercio.csv', ';', ['control'], ['id', 'Produto'], 'name', 'year', 'quantity')
-
-    #assert validate_numeric_column(comercio_csv, 'year', 'quantity') == True
-
-    # Arquivos de Importação
-    impVinhos_csv = trata_csv('ImpVinhos.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',
-                              'Vinhos', 'País', 'country')
-
-    assert validate_numeric_column(impVinhos_csv, 'year', 'quantity') == True
-
-    impEspumantes_csv = trata_csv('ImpEspumantes.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity',
-                                  'category', 'Espumantes', 'País', 'country')
-
-    assert validate_numeric_column(impEspumantes_csv, 'year', 'quantity') == True
-
-    impFrescas_csv = trata_csv('ImpFrescas.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',
-                               'Frescas', 'País', 'country')
-
-    assert validate_numeric_column(impFrescas_csv, 'year', 'quantity') == True
-
-    impPassas_csv = trata_csv('ImpPassas.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',
-                              'Passas', 'País', 'country')
-
-    assert validate_numeric_column(impPassas_csv, 'year', 'quantity') == True
-
-    impSuco_csv = trata_csv('ImpSuco.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',
-                            'Passas', 'País', 'country')
-
-    assert validate_numeric_column(impSuco_csv,'year','quantity') == True
-
-    #Arquivos de Exportação
-    expSuco_csv = trata_csv('ExpSuco.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',
-                            'Sucos', 'País', 'country')
-
-    assert validate_numeric_column(expSuco_csv,'year','quantity') == True
-
-    expVinho_csv = trata_csv('ExpVinho.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category',
-                             'Vinhos', 'País', 'country')
-
-    assert validate_numeric_column(expVinho_csv,'year','quantity') == True
-
-
-    expEspumantes_csv = trata_csv('ExpEspumantes.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity',
-                                  'category', 'Espumantes', 'País', 'country')
-
-    assert validate_numeric_column(expEspumantes_csv,'year','quantity') == True
-
-    expUva_csv = trata_csv('ExpUva.csv', ';', ['País'], ['Id'], 'cultivation', 'year', 'quantity', 'category', 'Uvas',
-                           'País', 'country')
-
-    assert validate_numeric_column(expUva_csv,'year','quantity') == True
