@@ -13,7 +13,8 @@ def trata_csv(
         nome_coluna_tipo: str = None,
         nome_material: str = None,
         nome_antigo_pais: str = None,
-        nome_novo_pais: str = None
+        nome_novo_pais: str = None,
+        nome_coluna_preco: str = None
 ) -> pd.DataFrame:
     """
     Processa um arquivo CSV realizando operações de transformação e limpeza dos dados.
@@ -68,7 +69,36 @@ def trata_csv(
     # Define o tipo int para a coluna nome_coluna_valor
     arquivo[nome_coluna_valor] = arquivo[nome_coluna_valor].astype(int)
 
+    if nome_coluna_preco:
+        arquivo = separar_preco_quantidade(df_arquivo=arquivo,
+                                           nome_coluna_ano=nome_coluna_ano,
+                                           nome_coluna_valor=nome_coluna_valor,
+                                           nome_novo_pais=nome_novo_pais,
+                                           nome_coluna_preco=nome_coluna_preco)
+
     return arquivo
+
+
+def separar_preco_quantidade(df_arquivo, nome_coluna_ano: str, nome_coluna_valor: str, nome_novo_pais: str, nome_coluna_preco: str):
+    # Filtra os valores para a coluna preco.
+    df_arquivo[nome_coluna_preco] = df_arquivo[nome_coluna_valor].where(df_arquivo[nome_coluna_ano].str.match(r'^\d{4}\.1$'))
+    
+    # Filtra os valores para coluna quantidade.
+    df_arquivo[nome_coluna_valor] = df_arquivo[nome_coluna_valor].where(~df_arquivo[nome_coluna_ano].str.match(r'^\d{4}\.1$'))
+
+    # Remove ".1" das linhas da coluna ano.
+    df_arquivo[nome_coluna_ano] = df_arquivo[nome_coluna_ano].apply(lambda x: x.split('.')[0]) 
+    
+    # Substitui NaN por 0.
+    df_arquivo.fillna(0, inplace=True)
+
+    # Agrupa por pais e ano e aplica a soma nas colunas preco e quantidade para eliminar os ZEROS e unificar as linhas. 
+    df_arquivo_gp = df_arquivo.groupby([nome_novo_pais, nome_coluna_ano]).agg({nome_coluna_valor: 'sum', nome_coluna_preco: 'sum'}).reset_index()
+
+    # Define a coluna preco e quantidade com o tipo int. 
+    df_arquivo_gp[[nome_coluna_preco, nome_coluna_valor]] = df_arquivo_gp[[nome_coluna_preco, nome_coluna_valor]].astype(int)
+
+    return df_arquivo_gp
 
 
 def read_all_files():
@@ -157,6 +187,3 @@ def read_all_files():
                            'País', 'country')
 
     assert validate_numeric_column(expUva_csv,'year','quantity') == True
-
-
-
