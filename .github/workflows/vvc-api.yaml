@@ -23,7 +23,9 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest --junitxml=results.xml
+        coverage run --source=. -m pytest --junitxml=results.xml
+        coverage report -m
+        coverage html
 
     - name: Upload JUnit test results
       uses: actions/upload-artifact@v3
