@@ -31,8 +31,8 @@ jobs:
         name: test-results
         path: results.xml
 
-    - name: Upload JUnit test results
-      uses: actions/upload-artifact@v3
+    - name: Report Test Results
+      uses: mikefarah/git-action-test-results@v1
       with:
-        name: junit-results
-        path: results.xml
+        test-results: results.xml
+        format: junit
