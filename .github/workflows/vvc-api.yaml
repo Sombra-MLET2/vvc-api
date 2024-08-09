@@ -25,14 +25,8 @@ jobs:
       run: |
         pytest --junitxml=results.xml
 
-    - name: Upload test results
+    - name: Upload JUnit test results
       uses: actions/upload-artifact@v3
       with:
-        name: test-results
+        name: junit-results
         path: results.xml
-
-    - name: Report Test Results
-      uses: mikefarah/git-action-test-results@v1
-      with:
-        test-results: results.xml
-        format: junit
