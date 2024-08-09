@@ -15,7 +15,7 @@ SECRET_KEY = '8e8e092f6c6d48839b5b514b3edb7d57'
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/token")
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)):
     """Grabs Bearer token Via OAuth2PasswordBearer and parse it to find an existing user.

@@ -1,6 +1,8 @@
 import logging
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
@@ -36,7 +38,25 @@ async def add_user(user: User, db: Session = Depends(get_db)):
 
 
 @router.post("/token")
-async def login(user: User, db: Session = Depends(get_db)):
+async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session = Depends(get_db)):
+    logger.info(f'Login attempt by {form_data.username}')
+    user_db = find_user(db, form_data.username)
+
+    if user_db is None or not verify_password(form_data.password, user_db.hashed_password):
+        logger.warning(f'Login failed for user {form_data.username}')
+        raise HTTPException(
+            status_code=401,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    access_token = create_access_token({'sub': user_db.email})
+
+    return Token(access_token=access_token,
+                 token_type="bearer")
+
+@router.post("/api-token")
+async def login_api(user: User, db: Session = Depends(get_db)):
     logger.info(f'Login attempt by {user.email}')
     user_db = find_user(db, user.email)
 

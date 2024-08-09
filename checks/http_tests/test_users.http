@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8000/users/token
+POST http://127.0.0.1:8000/users/api-token
 Accept: application/json
 Content-Type: application/json
 
