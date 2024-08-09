@@ -1,4 +1,6 @@
-# vvc API
+[![VVC-API Tests](https://github.com/Sombra-MLET2/vvc-api/actions/workflows/vvc-api.yaml/badge.svg)](https://github.com/Sombra-MLET2/vvc-api/actions/workflows/vvc-api.yaml)
+
+# VVC API
 
 ## Main Components
 
