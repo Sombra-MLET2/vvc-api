@@ -2,6 +2,7 @@ import logging
 from typing import List
 
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 
 from dtos import CategoryDTO
 from models.category import Category
@@ -27,4 +28,7 @@ def find_all(db: Session) -> List[Category]:
 
 
 def find_one(db: Session, dto: CategoryDTO) -> Category:
-    return db.query(Category).filter(Category.meta_name == dto.meta_name).first()
+    return db.query(Category).where(or_(
+                                        (Category.name == dto.name), 
+                                        (Category.meta_name == dto.meta_name)
+                                    )).first()
