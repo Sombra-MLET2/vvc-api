@@ -5,6 +5,8 @@ WORKDIR /app/
 
 COPY . /app/
 
+COPY ./csv_files/* /root/vvc-api/files/downloaded/
+
 RUN apt-get update && apt-get install firefox-esr -y
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt

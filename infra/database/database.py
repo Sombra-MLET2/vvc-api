@@ -5,10 +5,8 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 from infra.config import vvc_config
 
-if vvc_config.ENV == 'dev':
-    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
-else:
-    logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
+# Presentation strategic maneuver
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
 
 # Forcando SQLite a verificar foreign keys
