@@ -53,7 +53,7 @@ async def stop_tasks_scheduler():
 
 
 @app.get("/import_data")
-async def stop_tasks_scheduler():
+async def import_data_files():
     start_parser_files()
     return {"message": "Init processing files"}
 
