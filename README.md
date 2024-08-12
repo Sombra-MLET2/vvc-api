@@ -9,6 +9,9 @@
 * [AIOCache 0.12.2](https://pypi.org/project/aiocache/)
 * [SQLAlchemy 2.x](https://docs.sqlalchemy.org/en/20/contents.html)
 * [SQLite3](https://www.sqlite.org/index.html)
+* [Pandas 2.2.2](https://pandas.pydata.org/)
+* [Schedule 1.2.2](https://schedule.readthedocs.io/en/stable/index.html)
+* [Selenium 4.23.0](https://selenium-python.readthedocs.io/)
 
 ## Configuring Environment
 
