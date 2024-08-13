@@ -2,6 +2,8 @@
 
 # VVC API
 
+[![About the project](https://img.youtube.com/vi/wiNhuAg3Zg8/0.jpg)](https://www.youtube.com/watch?v=wiNhuAg3Zg8)
+
 ## Main Components
 
 * Python 3.12.x
