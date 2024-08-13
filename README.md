@@ -4,7 +4,7 @@
 
 ## Main Components
 
-* Python 12.x
+* Python 3.12.x
 * [FastApi 0.111.x](https://fastapi.tiangolo.com/tutorial/)
 * [AIOCache 0.12.2](https://pypi.org/project/aiocache/)
 * [SQLAlchemy 2.x](https://docs.sqlalchemy.org/en/20/contents.html)
