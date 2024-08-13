@@ -32,7 +32,7 @@ vvc-api$ source env/bin/activate
 (env) vvc-api$ docker build -t vvc-api .
 (env) vvc-api$ docker run [-d] -p 8000:8000 vvc-api:latest
 ```
-6. Optionally, run tests from `test_main.http`
+6. Optionally, run tests from `checks/http_tests/*.http`
 
 ## Project Structure
 
