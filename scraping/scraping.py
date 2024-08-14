@@ -114,7 +114,7 @@ def download_all_csv():
                 download_csv(get_csv_url(menu.url), name.replace(" ", "-"))
             else:
                 for sub_menu in menu.sub_menu:
-                    name = sub_menu.name
+                    name = menu.name + '-' + sub_menu.name
                     download_csv(get_csv_url(sub_menu.url), name.replace(" ", "-"))
         return {"status": "OK", "message": "download successfully"}
     except:
